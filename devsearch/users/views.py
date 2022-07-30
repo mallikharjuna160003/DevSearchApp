@@ -25,7 +25,7 @@ def loginUser(request):
 
 def logoutUser(request):
     logout(request)
-    messages.error(request, "Successfully logout")
+    messages.info(request, "Successfully logout")
     return redirect('login')
 
 def registerUser(request):
@@ -58,3 +58,16 @@ def userProfile(request,pk):
     otherskills = profile.skill_set.filter(description=None)
     context = {'profile':profile,'topskills':topskills,'otherskills':otherskills}
     return render(request,'users/user-profile.html',context)
+
+@login_required(login_url='login')
+def userAccount(request):
+    profile = request.user.profile
+    skills = profile.skill_set.all()
+    projects = profile.project_set.all()
+
+    context={'profile':profile,'skills':skills,'projects':projects}
+    return render(request,'users/account.html',context)
+
+def editAccount(request):
+    context = {}
+    return render(request,'users/profile_form.html')

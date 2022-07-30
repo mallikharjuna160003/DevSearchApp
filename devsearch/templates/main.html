@@ -19,8 +19,9 @@
 </head>
 <body>
     {% include 'navbar.html' %}
-    {% if messages %}
+    <!-- {% if messages %}
     <ul class="messages">
+        
         {% for message in messages %}
         <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
             {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
@@ -28,10 +29,22 @@
         </li>
         {% endfor %}
     </ul>
+    {% endif %} -->
+
+    {% if messages %}
+       {% for message in messages %}
+       <div class="alert alert--{{message.tags}}">
+        <p class="alert__message">{{message}}</p>
+        <button class="alert__close">x</button>
+       </div>
+       {% endfor %}
     {% endif %}
+
     {% block content %}
    
     {% endblock %}
     <p>FOOTER PAGE</p>
+    
 </body>
+<script src="{% static 'uikit/app.js' %}"></script>
 </html>
